@@ -31,8 +31,8 @@ const schema = new mongoose.Schema({
     }
   },
   gender: {
+    // 0 = 女生
     // 1 = 男生
-    // 2 = 女生
     type: Number,
     require: [true, '缺少性別']
   },
@@ -75,7 +75,13 @@ const schema = new mongoose.Schema({
         }
       }
     ]
+  },
+  role: {
+    // 0 = 使用者
+    // 1 = 管理員
+    type: Number,
+    default: 0
   }
-})
+}, { versionkey: false })
 
 export default mongoose.model('users', schema)
