@@ -12,9 +12,7 @@ const schema = new mongoose.Schema({
   },
   password: {
     type: String,
-    require: [true, '缺少密碼欄位'],
-    minlength: [4, '密碼不得低於 4 個字'],
-    maxlength: [20, '密碼不得高於 20 個字']
+    require: [true, '缺少密碼欄位']
   },
   tokens: {
     type: [String]
@@ -56,6 +54,7 @@ const schema = new mongoose.Schema({
         },
         quantity: {
           type: Number,
+          min: [0, '商品數量不能小於0'],
           require: [true, '缺少商品數量']
         }
       }
@@ -68,11 +67,12 @@ const schema = new mongoose.Schema({
           type: mongoose.ObjectId,
           ref: 'products',
           require: [true, '缺少商品欄位']
-        },
-        like: {
-          type: Boolen,
-          require: [true, '需要加入收藏']
         }
+        // ,
+        // like: {
+        //   type: Boolen,
+        //   require: [true, '需要加入收藏']
+        // }
       }
     ]
   },
