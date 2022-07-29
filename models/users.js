@@ -28,12 +28,6 @@ const schema = new mongoose.Schema({
       message: '信箱格式錯誤'
     }
   },
-  gender: {
-    // 0 = 女生
-    // 1 = 男生
-    type: Number,
-    require: [true, '缺少性別']
-  },
   nickname: {
     type: String,
     require: [true, '暱稱不得為空'],

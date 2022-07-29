@@ -1,10 +1,10 @@
 import passport from 'passport'
-import passportJwt from 'passport-jwt'
+import passportJWT from 'passport-jwt'
 import passportLocal from 'passport-local'
 import bcrypt from 'bcrypt'
 import users from '../models/users.js'
 
-const LocalStrategy = passport.LocalStrategy
+const LocalStrategy = passportLocal.Strategy
 const JWTStrategy = passportJWT.Strategy
 const ExtractJWT = passportJWT.ExtractJwt
 
