@@ -26,7 +26,7 @@ export const register = async (req, res) => {
       const message = error.errors[key].message
       return res.status(400).send({ success: false, message })
     } else if (error.name === 'MongoServerError' && error.code === 11000) {
-      res.status(400).send({ success: false, message: '有重複的 KEY 值' })
+      res.status(400).send({ success: false, message: '帳號或是 Email 重複' })
     } else {
       res.status(500).send({ success: false, message: '伺服器錯誤' })
     }
@@ -85,7 +85,6 @@ export const getUser = (req, res) => {
       success: true,
       message: '',
       result: {
-        token,
         account: req.user.account,
         email: req.user.email,
         nickname: req.user.nickname,

@@ -1,5 +1,5 @@
-import mongoose from "mongoose"
-import validator from "validator"
+import mongoose from 'mongoose'
+import validator from 'validator'
 
 const schema = new mongoose.Schema({
   account: {
@@ -32,7 +32,7 @@ const schema = new mongoose.Schema({
     type: String,
     require: [true, '暱稱不得為空'],
     minlength: [1, '暱稱需 1 個字以上'],
-    minlength: [10, '暱稱需 10 個字以下']
+    maxlength: [10, '暱稱需 10 個字以下']
   },
   avatar: {
     type: String,

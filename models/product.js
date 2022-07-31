@@ -34,3 +34,5 @@ const schema = new mongoose.Schema({
   }
 
 }, { versionkey: false })
+
+export default mongoose.model('products', schema)
