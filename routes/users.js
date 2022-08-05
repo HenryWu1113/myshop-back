@@ -9,7 +9,8 @@ import {
   getUser,
   addCart,
   editCart,
-  getCart
+  getCart,
+  addLike
 } from '../controllers/users.js'
 
 const router = express.Router()
@@ -22,5 +23,6 @@ router.get('/', auth.jwt, getUser)
 router.post('/cart', content('application/json'), auth.jwt, addCart)
 router.patch('/cart', content('application/json'), auth.jwt, editCart)
 router.get('/cart', auth.jwt, getCart)
+router.post('likes', content('application/json'), auth.jwt, addLike)
 
 export default router

@@ -162,3 +162,23 @@ export const getCart = async (req, res) => {
     res.status(500).send({ success: false, message: '伺服器錯誤' })
   }
 }
+
+export const addLike = async (req, res) => {
+  try {
+    const result = await products.findById(req.body.product)
+    if (!result || !result.sell) {
+      return res.status(404).send({ success: false, message: '商品不存在' })
+    }
+    req.user.likes.push({ product: req.body.product })
+    await req.user.save()
+    res.status(200).send({ success: true, message: '', result: req.user.likes.length })
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      const key = Object.keys(error.errors)[0]
+      const message = error.errors[key].message
+      return res.status(400).send({ success: false, message })
+    } else {
+      res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+  }
+}
