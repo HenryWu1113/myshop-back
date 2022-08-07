@@ -49,7 +49,7 @@ export const login = async (req, res) => {
         nickname: req.user.nickname,
         avatar: req.user.avatar,
         cart: req.user.cart.length,
-        likes: req.user.likes.length,
+        likes: req.user.likes,
         role: req.user.role
       }
     })
@@ -80,6 +80,7 @@ export const extend = async (req, res) => {
   }
 }
 
+// likes: req.user.likes
 export const getUser = (req, res) => {
   try {
     res.status(200).send({
@@ -91,7 +92,7 @@ export const getUser = (req, res) => {
         nickname: req.user.nickname,
         avatar: req.user.avatar,
         cart: req.user.cart.length,
-        likes: req.user.likes.length,
+        likes: req.user.likes,
         role: req.user.role
       }
     })
@@ -169,9 +170,44 @@ export const addLike = async (req, res) => {
     if (!result || !result.sell) {
       return res.status(404).send({ success: false, message: '商品不存在' })
     }
+
+    const idx = req.user.likes.findIndex(item => item.product.toString() === req.body.product)
+    if (idx > -1) {
+      return res.status(400).send({ success: false, message: '已在收藏中' })
+    }
+
     req.user.likes.push({ product: req.body.product })
     await req.user.save()
-    res.status(200).send({ success: true, message: '', result: req.user.likes.length })
+    res.status(200).send({ success: true, message: '加入收藏成功', result: req.user.likes })
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      const key = Object.keys(error.errors)[0]
+      const message = error.errors[key].message
+      return res.status(400).send({ success: false, message })
+    } else {
+      res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+  }
+}
+
+export const getLikes = async (req, res) => {
+  try {
+    const result = await users.findById(req.user._id).populate('likes.product')
+    res.status(200).send({ success: true, message: '', result: result.likes })
+  } catch (error) {
+    res.status(500).send({ success: false, message: '伺服器錯誤' })
+  }
+}
+
+export const deleteLike = async (req, res) => {
+  try {
+    const idx = req.user.likes.findIndex(item => item.product.toString() === req.body.product)
+    if (idx === -1) {
+      return res.status(400).send({ success: false, message: '未加入收藏，無法刪除' })
+    }
+    req.user.likes.splice(idx, 1)
+    req.user.save()
+    res.status(200).send({ success: true, message: '取消收藏', result: req.user.likes.length })
   } catch (error) {
     if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]
