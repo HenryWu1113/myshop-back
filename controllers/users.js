@@ -158,7 +158,7 @@ export const editCart = async (req, res) => {
 export const getCart = async (req, res) => {
   try {
     const result = await users.findById(req.user._id, 'cart').populate('cart.product')
-    res.status(400).send({ seccess: true, message: '', result: result.cart })
+    res.status(200).send({ seccess: true, message: '', result: result.cart })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })
   }
@@ -207,7 +207,7 @@ export const deleteLike = async (req, res) => {
     }
     req.user.likes.splice(idx, 1)
     req.user.save()
-    res.status(200).send({ success: true, message: '取消收藏', result: req.user.likes.length })
+    res.status(200).send({ success: true, message: '取消收藏', result: req.user.likes })
   } catch (error) {
     if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]
