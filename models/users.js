@@ -76,6 +76,6 @@ const schema = new mongoose.Schema({
     type: Number,
     default: 0
   }
-}, { versionkey: false })
+}, { versionKey: false })
 
 export default mongoose.model('users', schema)

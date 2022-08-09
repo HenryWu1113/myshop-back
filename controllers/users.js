@@ -143,7 +143,7 @@ export const editCart = async (req, res) => {
       req.user.cart[idx].quantity = req.body.quantity
       await req.user.save()
     }
-    res.status(200).send({ success: true, message: '' })
+    res.status(200).send({ success: true, message: '', result: req.user.cart.length })
   } catch (error) {
     if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]

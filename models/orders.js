@@ -23,16 +23,16 @@ const schema = new mongoose.Schema({
       }
     ]
   },
-  usercellphone: {
-    type: String,
-    require: [true, '缺少手機號碼欄位'],
-    validate: {
-      validator(value) {
-        return validator.isMobilePhone(value.toString(), 'zh-TW')
-      },
-      message: '手機號碼格式錯誤'
-    }
-  },
+  // usercellphone: {
+  //   type: String,
+  //   require: [true, '缺少手機號碼欄位'],
+  //   validate: {
+  //     validator(value) {
+  //       return validator.isMobilePhone(value.toString(), 'zh-TW')
+  //     },
+  //     message: '手機號碼格式錯誤'
+  //   }
+  // },
   cellphone: {
     type: String,
     require: [true, '缺少手機號碼欄位'],
@@ -47,7 +47,7 @@ const schema = new mongoose.Schema({
     type: String,
     require: [true, '缺少地址欄位']
   },
-  name: {
+  receiver: {
     type: String,
     require: [true, '缺少收件人欄位']
   },
