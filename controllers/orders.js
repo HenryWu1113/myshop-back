@@ -31,7 +31,7 @@ export const getMyOrders = async (req, res) => {
     const result = await orders.find({ user: req.user._id }).populate('products.product')
     return res.status(200).send({ seccess: true, message: '', result: result })
   } catch (error) {
-    return res.status(500).send({ seccess: false, message: '伺服器錯誤喔' })
+    return res.status(500).send({ seccess: false, message: '伺服器錯誤' })
   }
 }
 
