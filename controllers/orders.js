@@ -20,9 +20,19 @@ export const createOrder = async (req, res) => {
     })
     req.user.cart = []
     await req.user.save({ validateBeforeSave: false })
-    return res.status(200).send({ seccess: true, message: '' })
+    return res.status(200).send({ seccess: true, message: '', result: result._id })
   } catch (error) {
     return res.status(500).send({ seccess: false, message: '伺服器錯誤' })
+  }
+}
+
+export const getMyOrder = async (req, res) => {
+  try {
+    const result = await orders.findById(req.params.id)
+    console.log(result);
+    res.status(200).send({ success: true, message: '', result: result })
+  } catch (error) {
+    return res.status(500).send({ success: false, message: '伺服器錯誤' })
   }
 }
 
@@ -40,6 +50,7 @@ export const getAllOrders = async (req, res) => {
     const result = await orders.find().populate('products.product').populate('user', 'nickname')
     return res.status(200).send({ seccess: true, message: '', result: result })
   } catch (error) {
+    console.log(error)
     return res.status(500).send({ seccess: false, message: '伺服器錯誤' })
   }
 }
