@@ -50,7 +50,25 @@ export const getAllOrders = async (req, res) => {
     const result = await orders.find().populate('products.product').populate('user', 'nickname')
     return res.status(200).send({ seccess: true, message: '', result: result })
   } catch (error) {
-    console.log(error)
+    return res.status(500).send({ seccess: false, message: '伺服器錯誤' })
+  }
+}
+
+export const changeOrder = async (req, res) => {
+  try {
+    const data = {
+      user: req.user.user,
+      products: req.user.products,
+      cellphone: req.body.cellphone,
+      address: req.body.address,
+      receiver: req.body.receiver,
+      state: req.body.state,
+      data: req.user.date,
+      deadline: req.user.deadline
+    }
+    const result = await orders.findByIdAndUpdate(req.params.id, data, { new: true }).populate('products.product')
+    return res.status(200).send({ seccess: true, message: '', result: result })
+  } catch (error) {
     return res.status(500).send({ seccess: false, message: '伺服器錯誤' })
   }
 }

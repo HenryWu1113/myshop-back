@@ -7,6 +7,7 @@ import {
   getMyOrder,
   getMyOrders,
   getAllOrders,
+  changeOrder
 } from '../controllers/orders.js'
 
 const router = express.Router()
@@ -16,5 +17,6 @@ router.post('/', content('application/json'), auth.jwt, createOrder)
 router.get('/', auth.jwt, getMyOrders)
 router.get('/all', auth.jwt, admin, getAllOrders)
 router.get('/:id', auth.jwt, getMyOrder)
+router.patch('/:id', content('application/json'), auth.jwt, admin, changeOrder)
 
 export default router
