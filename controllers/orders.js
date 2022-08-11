@@ -29,8 +29,8 @@ export const createOrder = async (req, res) => {
 export const getMyOrder = async (req, res) => {
   try {
     const result = await orders.findById(req.params.id)
-    console.log(result);
-    res.status(200).send({ success: true, message: '', result: result })
+    console.log(result)
+    res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     return res.status(500).send({ success: false, message: '伺服器錯誤' })
   }
@@ -39,7 +39,7 @@ export const getMyOrder = async (req, res) => {
 export const getMyOrders = async (req, res) => {
   try {
     const result = await orders.find({ user: req.user._id }).populate('products.product')
-    return res.status(200).send({ seccess: true, message: '', result: result })
+    return res.status(200).send({ seccess: true, message: '', result })
   } catch (error) {
     return res.status(500).send({ seccess: false, message: '伺服器錯誤' })
   }
@@ -48,7 +48,7 @@ export const getMyOrders = async (req, res) => {
 export const getAllOrders = async (req, res) => {
   try {
     const result = await orders.find().populate('products.product').populate('user', 'nickname')
-    return res.status(200).send({ seccess: true, message: '', result: result })
+    return res.status(200).send({ seccess: true, message: '', result })
   } catch (error) {
     return res.status(500).send({ seccess: false, message: '伺服器錯誤' })
   }
@@ -66,8 +66,8 @@ export const changeOrder = async (req, res) => {
       data: req.user.date,
       deadline: req.user.deadline
     }
-    const result = await orders.findByIdAndUpdate(req.params.id, data, { new: true }).populate('products.product')
-    return res.status(200).send({ seccess: true, message: '', result: result })
+    const result = await orders.findByIdAndUpdate(req.params.id, data, { new: true }).populate('products.product').populate('user', 'nickname')
+    return res.status(200).send({ seccess: true, message: '', result })
   } catch (error) {
     return res.status(500).send({ seccess: false, message: '伺服器錯誤' })
   }
