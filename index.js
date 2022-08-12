@@ -8,6 +8,7 @@ import productsRouter from './routes/products.js'
 import ordersRouter from './routes/orders.js'
 
 mongoose.connect(process.env.DB_URL)
+mongoose.set('sanitizeFilter', true)
 
 const app = express()
 
