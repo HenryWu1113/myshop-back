@@ -7,6 +7,7 @@ import {
   logout,
   extend,
   getUser,
+  editUser,
   addCart,
   editCart,
   getCart,
@@ -22,6 +23,7 @@ router.post('/login', content('application/json'), auth.login, login)
 router.delete('/logout', auth.jwt, logout)
 router.post('/extend', content('application/json'), auth.jwt, extend)
 router.get('/', auth.jwt, getUser)
+router.patch('/', content('application/json'), auth.jwt, editUser)
 router.post('/cart', content('application/json'), auth.jwt, addCart)
 router.patch('/cart', content('application/json'), auth.jwt, editCart)
 router.get('/cart', auth.jwt, getCart)

@@ -101,6 +101,34 @@ export const getUser = (req, res) => {
   }
 }
 
+export const editUser = async (req, res) => {
+  try {
+    const result = await users.findById(req.user._id)
+    if (!result) return res.status(404).send({ success: false, message: '使用者不存在' })
+    req.user.nickname = req.body.nickname
+    req.user.email = req.body.email
+    req.user.avatar = req.body.avatar
+    await req.user.save()
+    res.status(200).send({
+      success: true,
+      message: '',
+      result: {
+        email: req.user.email,
+        nickname: req.user.nickname,
+        avatar: req.user.avatar
+      }
+    })
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      const key = Object.keys(error.errors)[0]
+      const message = error.errors[key].message
+      return res.status(400).send({ success: false, message })
+    } else {
+      res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+  }
+}
+
 export const addCart = async (req, res) => {
   try {
     // 驗證商品
