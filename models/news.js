@@ -17,6 +17,6 @@ const schema = new mongoose.Schema({
     type: Boolean,
     default: false
   }
-})
+}, { versionKey: false })
 
 export default mongoose.model('news', schema)
