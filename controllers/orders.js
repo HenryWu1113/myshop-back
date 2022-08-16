@@ -16,10 +16,12 @@ export const createOrder = async (req, res) => {
       products: req.user.cart,
       receiver: req.body.receiver,
       cellphone: req.body.cellphone,
-      address: req.body.address
+      address: req.body.address,
+      date: req.body.date,
+      deadline: req.body.deadline
     })
     req.user.cart = []
-    await req.user.save({ validateBeforeSave: false })
+    await req.user.save()
     return res.status(200).send({ seccess: true, message: '', result: result._id })
   } catch (error) {
     return res.status(500).send({ seccess: false, message: '伺服器錯誤' })
@@ -38,7 +40,7 @@ export const getMyOrder = async (req, res) => {
 
 export const getMyOrders = async (req, res) => {
   try {
-    const result = await orders.find({ user: req.user._id }).populate('products.product')
+    const result = await orders.find({ user: req.user._id }).populate('products.product').sort({ date: -1 })
     return res.status(200).send({ seccess: true, message: '', result })
   } catch (error) {
     return res.status(500).send({ seccess: false, message: '伺服器錯誤' })
@@ -47,7 +49,7 @@ export const getMyOrders = async (req, res) => {
 
 export const getAllOrders = async (req, res) => {
   try {
-    const result = await orders.find().populate('products.product').populate('user', 'nickname')
+    const result = await orders.find().populate('products.product').populate('user', 'nickname').sort({ date: -1 })
     return res.status(200).send({ seccess: true, message: '', result })
   } catch (error) {
     return res.status(500).send({ seccess: false, message: '伺服器錯誤' })

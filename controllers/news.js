@@ -51,7 +51,7 @@ export const getOneNews = async (req, res) => {
 
 export const getNews = async (req, res) => {
   try {
-    const result = await news.find({ shownews: true })
+    const result = await news.find({ shownews: true }).sort({ date: -1 })
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })
@@ -60,7 +60,7 @@ export const getNews = async (req, res) => {
 
 export const getAllNews = async (req, res) => {
   try {
-    const result = await news.find()
+    const result = await news.find().sort({ date: -1 })
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })

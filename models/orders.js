@@ -61,12 +61,12 @@ const schema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date.now()
+    default: Date.now
 
   },
   deadline: {
     type: Date,
-    default: Date.now() + 259200000 // 3天
+    default: Date.now + 259200000 // 3天
   }
 }, { versionKey: false })
 
