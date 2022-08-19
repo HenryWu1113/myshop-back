@@ -16,14 +16,13 @@ export const createOrder = async (req, res) => {
       products: req.user.cart,
       receiver: req.body.receiver,
       cellphone: req.body.cellphone,
-      address: req.body.address,
-      date: req.body.date,
-      deadline: req.body.deadline
+      address: req.body.address
     })
     req.user.cart = []
     await req.user.save()
     return res.status(200).send({ seccess: true, message: '', result: result._id })
   } catch (error) {
+    console.log(error);
     return res.status(500).send({ seccess: false, message: '伺服器錯誤' })
   }
 }
@@ -65,7 +64,7 @@ export const changeOrder = async (req, res) => {
       address: req.body.address,
       receiver: req.body.receiver,
       state: req.body.state,
-      data: req.user.date,
+      date: req.user.date,
       deadline: req.user.deadline
     }
     const result = await orders.findByIdAndUpdate(req.params.id, data, { new: true }).populate('products.product').populate('user', 'nickname')

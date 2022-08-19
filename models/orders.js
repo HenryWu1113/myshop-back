@@ -66,7 +66,8 @@ const schema = new mongoose.Schema({
   },
   deadline: {
     type: Date,
-    default: Date.now + 259200000 // 3天
+    // 有小問題
+    default: Date.now() + 259200000 // 3天
   }
 }, { versionKey: false })
 
